@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+th:replace="~{base::base(~{::section})}"
+> 
+<head>
+
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<section>
+<div class = "row text-center my-5 align-items-center">
+<div class="col my-5">
+<h2> Welcome to </h2><h1>Attendance Management System</h1>
+<a  th:href="@{/login}" class="btn btn-primary my-3">Login</a>
+</div>
+</div>
+</section>
+</body>
+</html>
