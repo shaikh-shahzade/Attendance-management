@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.org.attendance.model.Attendance;
 import com.org.attendance.model.User;
+import com.org.attendance.repository.AttendanceRepository;
 import com.org.attendance.repository.UserRepository;
 import com.org.attendance.service.ManagerService;
 
@@ -15,6 +17,8 @@ public class ManagerServiceImpl implements ManagerService {
 	@Autowired
 	UserRepository userRepository;
 	
+	@Autowired
+	AttendanceRepository attendanceRepository;
 
 	@Override
 	public List<User> getAllUsers() {
@@ -35,6 +39,14 @@ public class ManagerServiceImpl implements ManagerService {
 		return userRepository.save(u);
 		}
 		return null;
+	}
+
+
+	@Override
+	public List<Attendance> getAttendanceByUserId(Long id) {
+		// TODO Auto-generated method stub
+		User user = userRepository.findById(id).get();
+		return attendanceRepository.findAllByUser(user);
 	}
 
 }

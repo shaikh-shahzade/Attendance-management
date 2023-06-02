@@ -26,7 +26,7 @@ import lombok.Setter;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String email;
 	private String password;
@@ -40,4 +40,8 @@ public class User {
     @JsonIgnore
     private Set<User> employeeList;
 	
+    @OneToMany(fetch = FetchType.LAZY , mappedBy = "user",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Attendance> attendance;
+    
 }
