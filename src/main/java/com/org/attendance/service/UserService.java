@@ -16,4 +16,10 @@ public interface UserService {
 
 	public Attendance markAttendance(Attendance attendance, Long id);
 
+	public Attendance updateAttendance(Attendance attendance, Long id);
+
+	public Attendance deleteAttendance(Long id);
+
+	public List<Attendance> getAllAttendanceByUserId(Long id);
+
 }

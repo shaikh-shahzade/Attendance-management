@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.org.attendance.exceptions.ResourceNotFoundException;
 import com.org.attendance.model.Attendance;
 import com.org.attendance.model.User;
 import com.org.attendance.repository.AttendanceRepository;
 import com.org.attendance.repository.UserRepository;
 import com.org.attendance.service.UserService;
+import com.org.attendance.utl.AttendanceHelper;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -19,6 +21,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	AttendanceRepository attendanceRepo;
+	
 	
 	@Override
 	public List<User> getAllUsers() {
@@ -40,11 +43,37 @@ public class UserServiceImpl implements UserService {
 	public Attendance markAttendance(Attendance attendance , Long id) {
 		// TODO Auto-generated method stub
 		
-		User user = userRepo.findById(id).get();
+		User user = userRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("Attendance", "User" , id));
 		attendance.setUser(user);
 		attendance = attendanceRepo.save(attendance);
 		
 		return attendance;
+	}
+
+	@Override
+	public Attendance updateAttendance(Attendance attendance, Long id) {
+		// TODO Auto-generated method stub
+		
+		Attendance att= attendanceRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("Attendance", "User" , id));
+		att= AttendanceHelper.updateObject(att, attendance);
+		att = attendanceRepo.save(att);
+		return att;
+	}
+
+	@Override
+	public Attendance deleteAttendance(Long id) {
+		// TODO Auto-generated method stub
+		Attendance attendance = attendanceRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("Attendance", "User" , id));
+		attendanceRepo.delete(attendance);
+		return attendance;
+	}
+
+	@Override
+	public List<Attendance> getAllAttendanceByUserId(Long id) {
+		// TODO Auto-generated method stub
+		User user = userRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("Attendance", "User" , id));
+		List<Attendance> attendanceList = attendanceRepo.findAllByUser(user);
+		return attendanceList;
 	}
 
 }
