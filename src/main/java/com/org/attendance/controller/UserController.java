@@ -25,16 +25,34 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
-	@GetMapping()
-	public List<Attendance> getAllAttendanceByUserId(@RequestParam(name = "id") Long id	)
+	@GetMapping
+	public User getUserById(@RequestParam Long id)
 	{
-		return userService.getAllAttendanceByUserId(id);	
+		return userService.getUserById(id);
 	}
-	
+
 	@PostMapping
 	public User createUser(@RequestBody User user)
 	{
 		return userService.createUser(user);
+	}
+	
+	@PutMapping
+	public User updateUser(@RequestBody User user ,@RequestParam Long id)
+	{
+		return userService.updateUser(user ,id);
+	}
+	
+	@DeleteMapping
+	public User deleteUser(@RequestParam Long id)
+	{
+		return userService.deleteUser(id);
+	}
+
+	@GetMapping("attendance")
+	public List<Attendance> getAllAttendanceByUserId(@RequestParam(name = "id") Long id	)
+	{
+		return userService.getAllAttendanceByUserId(id);	
 	}
 	
 	@PostMapping("attendance")

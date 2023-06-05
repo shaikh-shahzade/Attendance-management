@@ -1,4 +1,4 @@
-package com.org.attendance.utl;
+package com.org.attendance.util;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;

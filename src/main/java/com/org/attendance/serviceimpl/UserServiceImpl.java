@@ -11,7 +11,8 @@ import com.org.attendance.model.User;
 import com.org.attendance.repository.AttendanceRepository;
 import com.org.attendance.repository.UserRepository;
 import com.org.attendance.service.UserService;
-import com.org.attendance.utl.AttendanceHelper;
+import com.org.attendance.util.AttendanceHelper;
+import com.org.attendance.util.UserHelper;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -22,7 +23,13 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	AttendanceRepository attendanceRepo;
 	
-	
+	@Override
+	public User getUserById(Long id) {
+		// TODO Auto-generated method stub
+		User u = userRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("User", "User" , id));
+		return u;
+	}
+
 	@Override
 	public List<User> getAllUsers() {
 		// TODO Auto-generated method stub
@@ -39,6 +46,23 @@ public class UserServiceImpl implements UserService {
 		return savedUser;
 	}
 
+	@Override
+	public User updateUser(User user, Long id) {
+		// TODO Auto-generated method stub
+		User u = userRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("User", "User" , id));
+		u = UserHelper.mapUser(u, user);
+		
+		return userRepo.save(u);
+	}
+
+	@Override
+	public User deleteUser(Long id) {
+		// TODO Auto-generated method stub
+		User u= userRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("Attendance", "User" , id));
+		userRepo.delete(u);
+		return u;
+	}
+	
 	@Override
 	public Attendance markAttendance(Attendance attendance , Long id) {
 		// TODO Auto-generated method stub
@@ -75,5 +99,8 @@ public class UserServiceImpl implements UserService {
 		List<Attendance> attendanceList = attendanceRepo.findAllByUser(user);
 		return attendanceList;
 	}
+
+
+	
 
 }

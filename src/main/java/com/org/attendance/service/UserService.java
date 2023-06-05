@@ -22,4 +22,10 @@ public interface UserService {
 
 	public List<Attendance> getAllAttendanceByUserId(Long id);
 
+	public User updateUser(User user, Long id);
+
+	public User deleteUser(Long id);
+
+	public User getUserById(Long id);
+
 }
