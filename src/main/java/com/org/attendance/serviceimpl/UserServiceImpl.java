@@ -3,6 +3,7 @@ package com.org.attendance.serviceimpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.org.attendance.exceptions.ResourceNotFoundException;
@@ -23,6 +24,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	AttendanceRepository attendanceRepo;
 	
+	@Autowired
+	PasswordEncoder passwordEncoder;
+	
 	@Override
 	public User getUserById(Long id) {
 		// TODO Auto-generated method stub
@@ -40,7 +44,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User createUser(User user) {
 		// TODO Auto-generated method stub
-		
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		if(userRepo.existsByEmail(user.getEmail()))
+			throw new ResourceNotFoundException("Already exist","email" ,2);
 		User savedUser = userRepo.save(user);
 		
 		return savedUser;
