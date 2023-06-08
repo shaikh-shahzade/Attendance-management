@@ -1,4 +1,4 @@
-package com.org.attendance;
+package com.org.attendance.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,9 +17,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		System.out.println("YEss" + username);
+		//System.out.println("YEss" + username);
 		User user = userRepo.findByEmail(username).orElseThrow(()-> new ResourceNotFoundException("email", username, 0));
-		System.out.println(user.getEmail());
+		//System.out.println(user.getEmail());
 		return new CustomUserDetails(user);
 	}
 

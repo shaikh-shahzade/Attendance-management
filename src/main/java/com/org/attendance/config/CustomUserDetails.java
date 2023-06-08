@@ -1,4 +1,4 @@
-package com.org.attendance;
+package com.org.attendance.config;
 
 import java.util.Collection;
 
